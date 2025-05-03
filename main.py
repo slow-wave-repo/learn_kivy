@@ -1,3 +1,5 @@
+from importlib.util import source_hash
+
 import kivy
 kivy.require('1.9.1')
 
@@ -14,11 +16,13 @@ class CanvasWidget(Widget):
 
         with self.canvas:
 
-            Color(.234, .456, .678, .8)
+            Color(1, 0, 0, 1)
 
-            self.rect = Rectangle(pos = self.center,
-                                  size = (self.width / 2.,
-                                          self.height / 2.))
+            self.rect = Rectangle(source = 'logoheader.png',
+                                  pos = self.pos,
+                                  size = self.size)
+
+
             self.bind(pos = self.update_rect,
                       size = self.update_rect)
 

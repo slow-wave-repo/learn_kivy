@@ -1,71 +1,35 @@
-from os import listdir
-
 import kivy
 
 from kivy.app import App
-from kivy.lang import Builder
+from kivy.uix.widget import Widget
+from kivy.uix.label import Label
+from kivy.uix.checkbox import CheckBox
 from kivy.uix.gridlayout import GridLayout
 
-from kivy.uix.widget import Widget
 
-class LineEllipse1(Widget):
-    pass
+class check_box(GridLayout):
+    def __init__(self, **kwargs):
+        super(check_box, self).__init__(**kwargs)
 
+        self.cols = 2
 
-class LineEllipse2(Widget):
-    pass
+        self.add_widget(Label(text = 'Male'))
+        self.active = CheckBox(active = True)
+        self.add_widget(self.active)
 
+        self.add_widget(Label(text='Female'))
+        self.active = CheckBox(active=True)
+        self.add_widget(self.active)
 
-class LineEllipse3(Widget):
-    pass
-
-
-class LineCircle1(Widget):
-    pass
-
-
-class LineCircle2(Widget):
-    pass
+        self.add_widget(Label(text='Other'))
+        self.active = CheckBox(active=True)
+        self.add_widget(self.active)
 
 
-class LineCircle3(Widget):
-    pass
-
-
-class LineCircle4(Widget):
-    pass
-
-
-class LineRectangle(Widget):
-    pass
-
-
-class LineBezier(Widget):
-    pass
-
-
-class LineApp(App):
+class CheckBoxApp(App):
     def build(self):
-        root = GridLayout(cols = 3,
-                          padding = 50,
-                          spacing = 100)
+        return check_box()
 
-        root.add_widget(LineEllipse1())
-        root.add_widget(LineEllipse2())
-        root.add_widget(LineEllipse3())
-        root.add_widget(LineCircle1())
-        root.add_widget(LineCircle2())
-        root.add_widget(LineCircle3())
-        root.add_widget(LineCircle4())
-        root.add_widget(LineRectangle())
-        root.add_widget(LineBezier())
-
-        return root
 
 if __name__ == '__main__':
-    kv_path = './kv/'
-    for kv in listdir(kv_path):
-        print(f"Loading kv file: {kv_path + kv}")
-        Builder.load_file(kv_path + kv)
-
-    LineApp().run()
+    CheckBoxApp().run()

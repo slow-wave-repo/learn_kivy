@@ -1,50 +1,34 @@
 import kivy
+kivy.require('1.9.1')
 
 from kivy.app import App
-kivy.require('1.9.0')
-
-from kivy.uix.label import Label
-from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.scatter import Scatter
-from kivy.uix.textinput import TextInput
-from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.widget import Widget
+from kivy.graphics import Rectangle, Color
 
 
-class TutorialApp(App):
+class CanvasWidget(Widget):
 
+    def __init__(self,**kwargs):
+
+        super(CanvasWidget, self).__init__(**kwargs)
+
+        with self.canvas:
+
+            Color(.234, .456, .678, .8)
+
+            self.rect = Rectangle(pos = self.center,
+                                  size = (self.width / 2.,
+                                          self.height / 2.))
+            self.bind(pos = self.update_rect,
+                      size = self.update_rect)
+
+    def update_rect(self, *args):
+        self.rect.pos = self.pos
+        self.rect.size = self.size
+
+
+class CanvasApp(App):
     def build(self):
-        b = BoxLayout(orientation = 'vertical')
+        return CanvasWidget()
 
-        t = TextInput(
-            font_size = 50,
-            size_hint_y = None,
-            height = 100
-        )
-
-        f = FloatLayout()
-
-        s = Scatter()
-
-        l = Label(
-            text='Hello!',
-            font_size=50,
-            size_hint=(None, None),
-            size=(300, 100),
-            halign='center',
-            valign='middle',
-            outline_color=(1, 1, 1, 1)
-        )
-
-        l.bind(size=lambda *args: setattr(l, 'text_size', l.size))
-
-        f.add_widget(s)
-        s.add_widget(l)
-        b.add_widget(t)
-        b.add_widget(f)
-        t.bind(text = l.setter('text'))
-
-        return b
-
-
-if __name__ == '__main__':
-    TutorialApp().run()
+CanvasApp().run()

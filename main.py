@@ -1,54 +1,50 @@
-from PIL.ImageChops import screen
-from kivymd.app import MDApp
-from kivymd.uix.button.button import theme_text_color_options
-from kivymd.uix.label import MDLabel
-from kivymd.uix.screen import Screen
+import kivy
+
+from kivy.app import App
+kivy.require('1.9.0')
+
+from kivy.uix.label import Label
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.scatter import Scatter
+from kivy.uix.textinput import TextInput
+from kivy.uix.boxlayout import BoxLayout
 
 
-class Demo(MDApp):
+class TutorialApp(App):
 
     def build(self):
-        screen = Screen()
+        b = BoxLayout(orientation = 'vertical')
 
-        lbl = MDLabel(
-            text="Welcome!",
-            pos_hint={
-                'center_x':0.8,
-                'center_y':0.8
-            },
-            theme_text_color="Custom",
-            text_color=(0.5,0,0.5,1),
-            font_style='Caption'
+        t = TextInput(
+            font_size = 50,
+            size_hint_y = None,
+            height = 100
         )
 
-        lbl1 = MDLabel(
-            text="Welcome!",
-            pos_hint={
-                'center_x': 0.8,
-                'center_y': 0.5
-            },
-            theme_text_color="Custom",
-            text_color=(0.5, 0, 0.5, 1),
-            font_style='H2'
+        f = FloatLayout()
+
+        s = Scatter()
+
+        l = Label(
+            text='Hello!',
+            font_size=50,
+            size_hint=(None, None),
+            size=(300, 100),
+            halign='center',
+            valign='middle',
+            outline_color=(1, 1, 1, 1)
         )
 
-        lbl2 = MDLabel(
-            text="Welcome!",
-            pos_hint={
-                'center_x': 0.8,
-                'center_y': 0.2
-            },
-            theme_text_color="Custom",
-            text_color=(0.5, 0, 0.5, 1),
-            font_style='H1'
-        )
+        l.bind(size=lambda *args: setattr(l, 'text_size', l.size))
 
-        screen.add_widget(lbl)
-        screen.add_widget(lbl1)
-        screen.add_widget(lbl2)
+        f.add_widget(s)
+        s.add_widget(l)
+        b.add_widget(t)
+        b.add_widget(f)
+        t.bind(text = l.setter('text'))
 
-        return screen
+        return b
 
 
-if __name__ == "__main__":
-    Demo().run()
+if __name__ == '__main__':
+    TutorialApp().run()

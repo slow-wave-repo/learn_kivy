@@ -1,40 +1,24 @@
 import kivy
 
-from kivy.app import App
-from kivy.uix.widget import Widget
-from kivy.uix.label import Label
-from kivy.uix.checkbox import CheckBox
-from kivy.uix.gridlayout import GridLayout
+kivy.require('1.9.0')
 
+from kivy.uix.dropdown import DropDown
+from kivy.uix.button import Button
+from kivy.base import runTouchApp
 
-class check_box(GridLayout):
-    def __init__(self, **kwargs):
-        super(check_box, self).__init__(**kwargs)
+dropdown = DropDown()
 
-        self.cols = 2
+for index in range(10):
+    btn = Button(text='Value % d' % index, size_hint_y=None, height=40)
 
-        self.add_widget(Label(text='Male'))
-        self.active = CheckBox(active=True)
-        self.add_widget(self.active)
+    btn.bind(on_release=lambda btn: dropdown.select(btn.text))
 
-        self.lbl_active = Label(text='Checkbox is on')
-        self.add_widget(self.lbl_active)
+    dropdown.add_widget(btn)
 
-        self.active.bind(active=self.on_checkbox_Active)
+mainbutton = Button(text='Hello', size_hint=(None, None), pos=(350, 300))
 
-    def on_checkbox_Active(self, checkboxInstance, isActive):
-        if isActive:
-            self.lbl_active.text='Checkbox is ON'
-            print('Checkbox checked')
-        else:
-            self.lbl_active.text='Checkbox is OFF'
-            print('Checkbox unchecked')
+mainbutton.bind(on_release=dropdown.open)
 
+dropdown.bind(on_select=lambda instance, x: setattr(mainbutton, 'text', x))
 
-class CheckBoxApp(App):
-    def build(self):
-        return check_box()
-
-
-if __name__ == '__main__':
-    CheckBoxApp().run()
+runTouchApp(mainbutton)

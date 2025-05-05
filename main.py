@@ -1,24 +1,30 @@
+#python #main.py
+
+
+from kivy.config import Config
+
+Config.set('graphics', 'resizable', True)
+
+# Config.set('graphics', 'resizable', '0')
+# Config.set('graphics', 'width', '500')
+
 import kivy
 
-kivy.require('1.9.0')
+kivy.require('1.9.1')
 
-from kivy.uix.dropdown import DropDown
-from kivy.uix.button import Button
-from kivy.base import runTouchApp
+from kivy.app import App
+from kivy.uix.label import Label
 
-dropdown = DropDown()
 
-for index in range(10):
-    btn = Button(text='Value % d' % index, size_hint_y=None, height=40)
+class MyLabelApp(App):
+    def build(self):
+        l2 = Label(text='[color=ff3333][b]Hello[/b][/color]\n [color=333fff]GFG[/color]',
+                   font_size='20sp',
+                   markup=True)
 
-    btn.bind(on_release=lambda btn: dropdown.select(btn.text))
+        return l2
 
-    dropdown.add_widget(btn)
 
-mainbutton = Button(text='Hello', size_hint=(None, None), pos=(350, 300))
+label = MyLabelApp()
 
-mainbutton.bind(on_release=dropdown.open)
-
-dropdown.bind(on_select=lambda instance, x: setattr(mainbutton, 'text', x))
-
-runTouchApp(mainbutton)
+label.run()

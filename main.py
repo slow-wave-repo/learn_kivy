@@ -1,30 +1,37 @@
-#python #main.py
+# python #main.py
 
-
-from kivy.config import Config
-
-Config.set('graphics', 'resizable', True)
-
-# Config.set('graphics', 'resizable', '0')
-# Config.set('graphics', 'width', '500')
 
 import kivy
 
-kivy.require('1.9.1')
+kivy.require('1.9.0')
 
-from kivy.app import App
-from kivy.uix.label import Label
+from kivy.uix.scrollview import ScrollView
+from kivy.properties import StringProperty
+from kivy.base import runTouchApp
+from kivy.lang import Builder
+
+Builder.load_string('''
+<ScrollableLabel>:
+    text: 'You are learning Kivy\\n' * 100
+    do_scroll_x: False
+    do_scroll_y: True
+
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_y: None
+        height: self.minimum_height
+
+        Label:
+            text: root.text
+            font_size: 20
+            text_size: self.width, None
+            size_hint_y: None
+            height: self.texture_size[1]
+''')
 
 
-class MyLabelApp(App):
-    def build(self):
-        l2 = Label(text='[color=ff3333][b]Hello[/b][/color]\n [color=333fff]GFG[/color]',
-                   font_size='20sp',
-                   markup=True)
-
-        return l2
+class ScrollableLabel(ScrollView):
+    text = StringProperty('')
 
 
-label = MyLabelApp()
-
-label.run()
+runTouchApp(ScrollableLabel())

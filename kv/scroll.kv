@@ -1,0 +1,47 @@
+#kivy #scroll.kv
+
+
+BoxLayout:
+    size_hint: 1, 1
+
+    ScrollView:
+        bar_color: [0, 0, 255, 1]
+        bar_width: 12
+
+        BoxLayout:
+            id: container
+            orientation: "vertical"
+            size_hint_y: None
+            height: self.minimum_height
+            width: self.parent.width
+
+            canvas.before:
+                Color:
+                    rgba: rgba("#50C878")
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            Label:
+                size_hint: 1, None
+                height: 300
+                markup: True
+                text: "[size=78]GeeksForGeeks[/size]"
+
+            Label:
+                size_hint: 1, None
+                height: 300
+                markup: True
+                text: "[size=78]GeeksForGeeks[/size]"
+
+            Label:
+                size_hint: 1, None
+                height: 300
+                markup: True
+                text: "[size=78]GeeksForGeeks[/size]"
+
+            Label:
+                size_hint: 1, None
+                height: 300
+                markup: True
+                text: "[size=78]GeeksForGeeks[/size]"
